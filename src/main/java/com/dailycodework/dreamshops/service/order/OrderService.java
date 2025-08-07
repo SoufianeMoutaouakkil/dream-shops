@@ -53,6 +53,7 @@ public class OrderService implements IOrderService {
      private List<OrderItem> createOrderItems(Order order, Cart cart) {
         return  cart.getItems().stream().map(cartItem -> {
             Product product = cartItem.getProduct();
+            // #SMQST: bad practice to modify product inventory here? and save it?
             product.setInventory(product.getInventory() - cartItem.getQuantity());
             productRepository.save(product);
             return  new OrderItem(

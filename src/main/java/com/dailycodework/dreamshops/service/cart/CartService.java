@@ -22,6 +22,7 @@ public class CartService implements ICartService{
     public Cart getCart(Long id) {
         Cart cart = cartRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+        // #SMQST: should we get and set the total amount here? or even save it?
         BigDecimal totalAmount = cart.getTotalAmount();
         cart.setTotalAmount(totalAmount);
         return cartRepository.save(cart);
@@ -33,6 +34,7 @@ public class CartService implements ICartService{
     public void clearCart(Long id) {
         Cart cart = getCart(id);
         cartItemRepository.deleteAllByCartId(id);
+        // #SMQST: is this necessary? or will it be handled by the cascade?
         cart.getItems().clear();
         cartRepository.deleteById(id);
 

@@ -21,6 +21,7 @@ public class Cart {
     private Long id;
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
+    // #SMQST: how is it related to CartItem?
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItem> items = new HashSet<>();
 
@@ -41,6 +42,7 @@ public class Cart {
 
     public void removeItem(CartItem item) {
         this.items.remove(item);
+        // #SMQST will it be removed from the database?
         item.setCart(null);
         updateTotalAmount();
     }

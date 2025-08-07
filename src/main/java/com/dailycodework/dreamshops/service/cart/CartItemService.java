@@ -52,6 +52,7 @@ public class CartItemService  implements ICartItemService{
     public void removeItemFromCart(Long cartId, Long productId) {
         Cart cart = cartService.getCart(cartId);
         CartItem itemToRemove = getCartItem(cartId, productId);
+        // #SMQST: will it be removed from the database?
         cart.removeItem(itemToRemove);
         cartRepository.save(cart);
     }
@@ -63,6 +64,7 @@ public class CartItemService  implements ICartItemService{
                 .stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst()
+                // #SMQST: should we throw an exception if the item is not found?
                 .ifPresent(item -> {
                     item.setQuantity(quantity);
                     item.setUnitPrice(item.getProduct().getPrice());

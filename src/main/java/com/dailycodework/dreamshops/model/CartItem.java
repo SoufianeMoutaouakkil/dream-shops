@@ -20,6 +20,7 @@ public class CartItem {
     private Long id;
     private int quantity;
     private BigDecimal unitPrice;
+    // #SMQST: is it necessary to store totalPrice? Can it be calculated from unitPrice and quantity?
     private BigDecimal totalPrice;
 
     @ManyToOne
